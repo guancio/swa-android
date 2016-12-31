@@ -27,7 +27,7 @@ TODO
 - XML files define a tree structure
   - Elements may be nested within each other
   - An element has at most one parent
-  - Example above: the "computer" element is the parent of the "mainboard" element
+  - Example above: the `computer` element is the parent of the `mainboard` element
 
 ### Attributes
 
