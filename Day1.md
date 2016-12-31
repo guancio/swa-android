@@ -20,7 +20,7 @@ TODO
 <computer>
   <processor>64-bit, 4 cores</processor>
   <mainboard>..</mainboard>
-  <graphicscard>..<graphicscard>
+  <graphicscard>..</graphicscard>
 </computer>
 ```
 
