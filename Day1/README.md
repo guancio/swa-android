@@ -1,4 +1,4 @@
-# Day 1 / Discplaimer
+# Day 1 / Disclaimer
 Lot of information have been copied from https://developer.android.com/training/index.html and http://www.vogella.com/tutorials/Android/article.html
 
 # Android
@@ -19,7 +19,7 @@ Marshmallow 6.0 supports applications that require API <= 23,
 Lollipop 5.1 supports applications that require API <= 22, and
 KitKat 4.4  supports applications that require API <= 19.
 That is, if you application requires some functionality that has been introduced in API 22,
-it will be able to run Marshmallow and Lollupop, but not on KitKat.
+it will be able to run Marshmallow and Lollipop, but not on KitKat.
 
 ## How to develop Android applications
 Android applications are primarily written in the Java programming language.
@@ -61,13 +61,13 @@ Now take a moment to review the most important files. First, be sure that the Pr
 
 There are usually two type of files in an Android application:
  * Java source files, used to write the source code of your application
- * XML files, used for everithing else: e.g. to specify the graphical layout of your app,
+ * XML files, used for everything else: e.g. to specify the graphical layout of your app,
    put buttons and labels, etc etc.
 Before giving a look to the files that constitute your first app we need to introduce XML files.
 
 # Intro to XML
 XML stands for eXtensible Markup Language.
-An XML document is a string of characters and is mainly ised to reppresent 
+An XML document is a string of characters and is mainly used to represent 
 a tree structure, for example
 ```XML
 <catalog>
@@ -102,12 +102,12 @@ An element is a logical document component that either begins with a start-tag a
 The characters between the start-tag and end-tag, if any, are the element's content, and may contain markup, including other elements, which are called child elements.
 Some examples:
 * `<author>Roberto Guanciale</author>` is an element, its content is `Roberto Guanciale`
-* `<title>The Scientific Method</title>` is an element, its conent is `The Scientific Method`
+* `<title>The Scientific Method</title>` is an element, its content is `The Scientific Method`
 * `<book pages="125">
   <author>Roberto Guanciale</author>	
   <title>First Android Lecture</title>	
- </book>` is an element. it has two childs: `<author>Roberto Guanciale</author>` and `<title>First Android Lecture</title>`.
-* the while XML document is an element, usually called root. It contains three childs.
+ </book>` is an element. it has two children: `<author>Roberto Guanciale</author>` and `<title>First Android Lecture</title>`.
+* the while XML document is an element, usually called root. It contains three children.
 
 
 ## Attributes
@@ -130,12 +130,12 @@ You can then see the following files:
 * `app > res > layout > activity_main.xml`
     This XML file defines the graphical interface of your application. For now it just contains the text "Hello world!".
 * `app > manifests > AndroidManifest.xml`
-    THis XML file describes the fundamental characteristics of the app and is used by Android to understand how start your application.
+    This XML file describes the fundamental characteristics of the app and is used by Android to understand how start your application.
 * `Gradle Scripts > build.gradle`
     Android Studio uses Gradle to compile and build your app. There is a `build.gradle` file for each module of your project, as well as a build.gradle file for the entire project.
 
 An Android application (short: Android app) is a single installable unit which can be started and used independently of other Android applications.
-An Android application consists of Android components, Java source and resource files. For now, it is enougth to know the following Android components:
+An Android application consists of Android components, Java source and resource files. For now, it is enough to know the following Android components:
 
 * Application: An Android application can have one Application class which is instantiated before any other Android component. It is the last component which is stopped during application shutdown.
   If not explicitly defined, Android creates a default application object for your application. (this is the case for our app)
@@ -253,9 +253,9 @@ We can change other properties of the `TextView`
  3. switching to the text view of the editor we can notice that a new attribute as been added to the `TextView` element: `android:textSize="25sp"`
 
 # Using resources
-Writing constants (expecially strings) in the layout XML file or in a Java source file is discuraged for several reason:
+Writing constants (especially strings) in the layout XML file or in a Java source file is discouraged for several reason:
 
-* We would like to change the welcome message independently from the bheavior of the app (which is defined in Java) and
+* We would like to change the welcome message independently from the behavior of the app (which is defined in Java) and
   the graphical layout of the activity
 * Possibly, we want to translate all messages to a different language
 
@@ -296,14 +296,14 @@ To let the `TextView` to print the message stored in the resource, open `main_ac
 of the element as `android:text="@string/hello_msg"`. The `@` symbol informs the tool that the content of the attribute must be takes from
 a resource, the `string` part informs the tool that the resource is a string (needed to locate the correct resource if there are multiple resources
 of different type having the same name), and the `hello_msg` part informs the tool about the name of the resource.
-From now on, if we want to change the welcome message, we can simply change the resource string file, whithout affecting the application layout.
+From now on, if we want to change the welcome message, we can simply change the resource string file, without affecting the application layout.
 
 The design view of the layout editor also support resources. The same change can be done by
 
 1. selecting the design view
 2. selecting the TextView
 3. clicking on `...` near the `text` attribute in the Property panel
-4. selecting the proper resources and clicking ok.
+4. selecting the proper resources and clicking OK.
 
 # Using layout managers
 A layout manager is responsible for layouting itself and its child `Views` It is a subclass of `ViewGroup`.
@@ -319,7 +319,7 @@ Children can specify their desired width and height via the following attributes
 * android:layout_width - Defines the width of the widget.
 * android:layout_height - Defines the height of the widget.
 
-Views can define their size. This can be done in units of measurement or via pre-defined layout values. For example, as 100dp.
+Views can define their size. This can be done in units of measurement or via predefined layout values. For example, as 100dp.
 The `match_parent` value tells the application to maximize the widget in its parent. The `wrap_content` value tells the layout to allocate the minimum amount so that the widget is rendered correctly.
 The effect of these elements is demonstrated in the following graphics.
 
@@ -328,15 +328,258 @@ The effect of these elements is demonstrated in the following graphics.
 ![match_parent.png](images/match_parent.png)
 
 
+## Frame layout
+`FrameLayout` is a layout manager which draws all child elements on top of each other. This allows to create nice visual effects.
+
+## LinearLayout
+`LinearLayout` puts all its child elements into a single column or row depending on the `android:orientation` attribute. Possible values for this attribute are `horizontal` and vertical. `horizontal` is the default value.
+
+If `horizontal` is used, the child elements are layouted as indicated by the following picture.
+
+![layout_h.png](images/layout_h.png)
+
+`Vertical` would result in a layout as depicted in the following picture.
+
+![layout_v.png](images/layout_v.png)
+
+`LinearLayout` can be nested to achieve more complex layouts.
+
+`LinearLayout` supports assigning a weight to individual children via the `android:layout_weight` layout parameter. This value specifies how much of the extra space in the layout is allocated to the corresponding view. If, for example, you have two widgets and the first one defines a `layout_weight` of 1 and the second of 2, the first will get 1/3 of the available space and the other one 2/3. You can also set the `layout_width` to zero to always have a certain ratio.
+
+## RelativeLayout
+
+`RelativeLayout` allows positioning the widget relative to each other. This can be used for complex layouts. `RelativeLayout` is a complex layout manager and should only be used if such a complex layout is required, as it performs a resource intensive calculation to layout its children.
+
+A simple usage for RelativeLayout is if you want to center a single component. Just add one component to the RelativeLayout and set the `android:layout_centerInParent` attribute to `true`.
+
+## GridLayout
+We will see it later
+
+## Excercise: display a text entry and a button
+Our goal is to show a text field and a button in a single row.
+
+Open the activity resource (`activity_main.xml`) and select the `Text` view.
+Delete completely the content and write the following code
+```XML
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+</LinearLayout>
+```
+`LinearLayout` is a view group (a subclass of `ViewGroup`) that lays out child views in horizontal orientation (as specified by the `android:orientation` attribute). Each child of a LinearLayout appears on the screen in the order in which it appears in the XML.
+
+Two other attributes, android:layout_width and android:layout_height, are required for all views in order to specify their size.
+
+Because the LinearLayout is the root view in the layout, it should fill the entire screen area that's available to the app by setting the width and height to `"match_parent"`. This value declares that the view should expand its width or height to match the width or height of the parent view.
+
+In the `activity_main.xml` file, within the `<LinearLayout>` element, add the following `<EditText>` element:
+```XML
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+    <EditText android:id="@+id/edit_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/hello_msg" />
+</LinearLayout>
+```
+
+Here is a description of the attributes in the `<EditText>` you added:
+
+* `android:id`
+    This provides a unique identifier for the view, which you can use to reference the object from your app code, such as to read and manipulate the object (you'll see this in the next lesson).
+  * The at sign (@) is required when you're referring to any resource object from XML. It is followed by the resource type (id in this case), a slash, then the resource name (edit_message).
+  * The plus sign (+) before the resource type is needed only when you're defining a resource ID for the first time. When you compile the app, the SDK tools use the ID name to create a new resource ID in your project's `R.java` file that refers to the `EditText` element. With the resource ID declared once this way, other references to the ID do not need the plus sign. Using the plus sign is necessary only when specifying a new resource ID and not needed for concrete resources such as strings or layouts.
+* `android:layout_width` and `android:layout_height`
+    Instead of using specific sizes for the width and height, the "wrap_content" value specifies that the view should be only as big as needed to fit the contents of the view. If you were to instead use "match_parent", then the EditText element would fill the screen, because it would match the size of the parent Linear
+* `android:hint`
+    This is a default string to display when the text field is empty. Instead of using a hard-coded string as the value, the `"@string/hello_message"` value refers to a string resource defined in a separate file. Because this refers to a concrete resource (not just an identifier), it does not need the plus sign. 
+
+Add a button after the `<EditText>`. Your file should look like this:
+```XML
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+        <EditText android:id="@+id/edit_message"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:hint="@string/hello_message" />
+        <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="@string/button_send" />
+</LinearLayout>
+```
+Note: This button doesn't need the android:id attribute, because we are not interested to know any property of the button from the activity code. On the other hand, we need an id for the text field, since we want to read the inserted text and from the activity code and print it.
+
+The layout is currently designed so that both the EditText and Button widgets are only as big as necessary to fit their content.
+This works fine for the button, but not as well for the text field, because the user might type something longer.
+
+Notice that, because you haven't defined the string resource `button_send`, you’ll see a compiler error at first.
+Open the string resource file at `res > values > strings.xml`. Here, you add a new strings.
+```XML
+        <string name="button_send">Send</string>
+```
+For text in the user interface, always specify each string as a resource. String resources allow you to manage all UI text in a single location, which makes the text easier to find and update. Externalizing the strings also allows you to localize your app to different languages by providing alternative definitions for each string resource
+
+Try to compile and run the application.
+
+## Refine the user interface
+It would be nice to fill the unused screen width with the text field.
+You can do this inside a LinearLayout with the weight property, which you can specify using the `android:layout_weight` attribute.
+
+The weight value is a number that specifies the amount of remaining space each view should consume, relative to the amount consumed by sibling views. This works kind of like the amount of ingredients in a drink recipe: "2 parts soda, 1 part syrup" means two-thirds of the drink is soda. For example, if you give one view a weight of 2 and another one a weight of 1, the sum is 3, so the first view fills 2/3 of the remaining space and the second view fills the rest. If you add a third view and give it a weight of 1, then the first view (with weight of 2) now gets 1/2 the remaining space, while the remaining two each get 1/4.
+
+The default weight for all views is 0, so if you specify any weight value greater than 0 to only one view, then that view fills whatever space remains after all views are given the space they require.
 
 
+In activity_main.xml, modify the <EditText> as follows:
+```Xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+    <EditText android:id="@+id/edit_message"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/hello_msg" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_send" />
+</LinearLayout>
+```
 
+Try to compile and run the application.
 
+## Adding behavior to you app
+You’ll add some code to MainActivity that does something with the text entered by the user.
 
+As common with other frameworks for graphical user interfaces, Android apps
+ususally follow  event-driven programming: a programming paradigm in which the flow of the program is determined by events such as user actions (mouse clicks, key presses), sensor outputs, or messages from other apps. 
 
+In an event-driven application, there is generally a *main loop* that listens for events, and then triggers a *callback function* when one of those events is detected. 
+Because the code for checking for events and the main loop do not depend on the application, many programming frameworks take care of their implementation and expect the user to provide only the code for the *event handlers*.
 
+In activity_main.xml, assign the name sendMessage to the android:onClick property of your Button:
+```Xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+    <EditText android:id="@+id/edit_message"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/hello_msg" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="sendMessage"
+        android:text="@string/button_send" />
+</LinearLayout>
+```
+This attribute tells the system to call the `sendMessage()` method in your activity whenever a user clicks on the button.
+Thus we need to define the sendMessage method, which is the event handler for button's clicks. Open  MainActivity.java and add the sendMessage method:
+```Java
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+    /** Called when the user clicks the Send button */
+    public void sendMessage(View view) {
+        // Do something in response to button
+    }
+}
+```
+
+(p.s. import `import android.view.View;` if needed).
+In order for the system to match this method to the method name given to `android:onClick`, the signature must be exactly as shown. Specifically, the method must:
+ * Be public
+ * Have a void return value
+ * Have a `View` as the only parameter (this will be the View that was clicked)
+
+Next, you’ll fill in this method to read the contents of the text field and do something meaningful.
+
+## Showing a message / popup
+A toast provides simple feedback about an operation in a small popup. It only fills the amount of space required for the message and the current activity remains visible and interactive. For example, navigating away from an email before you send it triggers a "Draft saved" toast to let you know that you can continue editing later. Toasts automatically disappear after a timeout.
+
+First, instantiate a Toast object with one of the makeText() methods. This method takes three parameters: the application `Context` (for now this is the Activity itself), the text message, and the duration for the toast. It returns a properly initialized Toast object. You can display the toast notification with show(), as shown in the following example:
+
+```Java
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+    /** Called when the user clicks the Send button */
+    public void sendMessage(View view) {
+        Toast toast = Toast.makeText(this, "Button pressed", Toast.LENGTH_SHORT);
+        toast.show();
+    }
+}
+```
+Compile, run the application and try to press the button.
+
+## Display text from your EditText field
+To read the content of the text field, we first need to get a reference to the corresponding object.
+This is done using `EditText input = (EditText) findViewById(R.id.edit_message);`
+* `R.id.edit_message` is a field of the Java file generated from the resource XML file. This field is set by the Android framework to a unique number that represent the View whose id is edit_message (i.e. our EditText field).
+* `findViewById` is a method of the Activity supercalls that takes an id and yields a reference to the corresponding View object
+* statically, fiendViewById does not know the type of the View, so we need to explicitly case the result to a EditText object
+
+Once we get a reference to the EditText, we can extract the content of the widget using `input.getText().toString();`. The resulting code is
+```Java
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+    public void sendMessage(View view) {
+        EditText input = (EditText) findViewById(R.id.edit_message);
+        String message = input.getText().toString();
+        Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+}
+```
+
+Excercise, add a third button that sets the TextField to the current date of the system.
+```Java
+    public void setDate(View view) {
+        EditText input = (EditText) findViewById(R.id.edit_message);
+        String message = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+        input.setText(message);
+    }
+```
 
 
 
 For example, to access a String with the `R.string.yourString` ID in your source code, you would use the getString(R.string.yourString) method defined on the Context class.
 
+GridLayout colspan
