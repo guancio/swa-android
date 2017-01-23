@@ -578,8 +578,116 @@ Excercise, add a third button that sets the TextField to the current date of the
     }
 ```
 
+# Debugging
+Try to add breakpoints to your program, run your program in debug mode,
+inspect the value of local variables and step the program.
 
+# Other GUI components: Spinners
+Spinners provide a quick way to select one value from a set. In the default state, a spinner shows its currently selected value. Touching the spinner displays a dropdown menu with all other available values, from which the user can select a new one.
+
+## Adding a spinner to you view
+
+You can add a spinner to your layout with the Spinner object. You should usually do so in your XML layout with a `<Spinner>` element. For example:
+
+```XML
+<Spinner
+    android:id="@+id/my_spinner"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" />
+```
+
+To populate the spinner with a list of choices, you then need to specify a SpinnerAdapter in your Activity or Fragment source code.
+The choices you provide for the spinner can come from any source, but must be provided through an `SpinnerAdapter`, such as an `ArrayAdapter` if the choices are available in an array.
+
+In the `onCreate` method of your activity you can set up the spinner to use the proper adapter and the proper source of choices. In the following example,
+we use a list of String (`this.choices`) as source of choices:
+
+```Java
+protected void onCreate(Bundle savedInstanceState) {
+  super.onCreate(savedInstanceState);
+  setContentView(R.layout.activity_main);
+
+  choices = new Vector<CharSequence>();
+  choices.add("Option 1");
+  choices.add("Second option");
+
+  Spinner spinner = (Spinner) findViewById(R.id.my_spinner);
+  // Create an ArrayAdapter using the string list and a default spinner layout
+  ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, this.choices);
+  // Specify the layout to use when the list of choices appears
+  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+  // Apply the adapter to the spinner
+  spinner.setAdapter(adapter);
+}
+```
+The `ArrayAdapter` is in charge of transforming the options in a view that can be displayed by Android. The constructor  allows you to create an `ArrayAdapter` from the string list. The second argument is a layout resource that defines how the selected choice appears in the spinner control. The `simple_spinner_item` layout is provided by the platform and is the default layout you should use unless you'd like to define your own layout for the spinner's appearance.
+
+You should then call `setDropDownViewResource(int)` to specify the layout the adapter should use to display the list of spinner choices (`simple_spinner_dropdown_item is another` standard layout defined by the platform).
+
+Finally, call `setAdapter()` to apply the adapter to your Spinner.
+
+
+If the available choices for your spinner are pre-determined, you can provide them with a string array defined in a string resource file:
+```XML
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="options_array">
+        <item>Option 1</item>
+        <item>Option 2</item>
+        <item>Option 3</item>
+    </string-array>
+</resources>
+```
+
+With an array such as this one, you can use the following code in your Activity to create the adapter
+```Java
+ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.options_array, android.R.layout.simple_spinner_item);
+```
+
+## Modifying dynamically the list of options
+Sometime it is necessary to change the options dynamically. It is not sufficient to change the `List` provided to the `ArrayAdapter`, instead the following pattern must be used
+
+```Java
+choices.add("New Option");
+adapter.notifyDataSetChanged();
+```
+So, first the list contating the choices must be updated (e.g. by clearing it, adding elements, removing elements etc) then the adapter must be informed about the changes in the data backend using `notifyDataSetChanged`.
+
+
+## Responding to User Selections
+
+When the user selects an item from the drop-down, the Spinner object receives an on-item-selected event.
+
+To define the selection event handler for a spinner, implement the `AdapterView.OnItemSelectedListener` interface and the corresponding `onItemSelected()` callback method. For example, here's an implementation of the interface in an `Activity`:
+
+```Java
+public class SpinnerActivity extends AppCompatActivity  implements AdapterView.OnItemSelectedListener {
+    ...
+    public void onItemSelected(AdapterView<?> parent, View view,
+            int pos, long id) {
+        // An item was selected. You can retrieve the selected item using
+        // parent.getItemAtPosition(pos)
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
+    }
+}
+```
+
+The `AdapterView.OnItemSelectedListener` requires the `onItemSelected()` and `onNothingSelected()` callback methods.
+
+Then you need to specify the interface implementation by calling `setOnItemSelectedListener()`:
+
+```Java
+Spinner spinner = (Spinner) findViewById(R.id.my_spinner);
+spinner.setOnItemSelectedListener(this);
+```
+
+If you implement the `AdapterView.OnItemSelectedListener` interface with your Activity (such as in the example above), you can pass `this` as the interface instance.
+
+
+
+# Garbage
 
 For example, to access a String with the `R.string.yourString` ID in your source code, you would use the getString(R.string.yourString) method defined on the Context class.
-
-GridLayout colspan
