@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="hello_msg">Insert the value here!</string>
+    <string name="button_send">Convert</string>
+</resources>
