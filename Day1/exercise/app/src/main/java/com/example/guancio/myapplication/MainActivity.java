@@ -17,104 +17,122 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Vector;
 
 import static android.R.id.message;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private ArrayList<String> list;
-    private ArrayAdapter<String> adapter;
-    ArrayList<String> members;
-    private Vector<CharSequence> units2;
-    private ArrayAdapter adapter2;
+    static String[] distances = {"Meters", "Miles", "Feet", "Inches"};
+    static String[] weights = {"Kilograms", "Pounds", "Ounces", "Grains"};
+    static String[] volumes = {"Liters", "Pint", "Fluid ounces", "Gallon"};
 
+    Map<String,Float> conversions = new HashMap<String,Float>() {{
+        put("Meters", 1.0f); put("Miles", 1/5280.f*3.28084f); put("Feet", 3.28084f); put("Inches", 3.28084f*12);
+        put("Kilograms", 1.0f); put("Pounds", 1000f/28.349f/16); put("Ounces", 1000f/28.349f); put("Grains", 1000f/28.349f/16*7000);
+        put("Liters", 1.0f); put("Pint", 1.0f/3.785f*8); put("Fluid ounces", 1.0f/3.785f*8*16); put("Gallon", 1.0f/3.785f);
+    }};
+
+    private Vector<CharSequence> targetUnits;
+    private ArrayAdapter<String> targetAdapter;
+    
+/*
+
+    ArrayList<String> members;
+    
+    private ArrayAdapter adapter2;
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Spinner spinner = (Spinner) findViewById(R.id.source_unit);
-        spinner.setOnItemSelectedListener(this);
-
         List<CharSequence> units = new Vector<CharSequence>();
-        units.add("Meters");
-        units.add("Miles");
-        units.add("Feets");
-        units.add("Kilograms");
-        units.add("Pounds");
-        units.add("Ounces");
+        units.addAll(Arrays.asList(distances));
+        units.addAll(Arrays.asList(weights));
+        units.addAll(Arrays.asList(volumes));
+
+        Spinner spinnerSource = (Spinner) findViewById(R.id.source_unit);
+        spinnerSource.setOnItemSelectedListener(this);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, units);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        // Apply the targetAdapter to the spinner
+        spinnerSource.setAdapter(adapter);
 
-        Spinner spinner2 = (Spinner) findViewById(R.id.destination_unit);
+        Spinner spinnerTarget = (Spinner) findViewById(R.id.destination_unit);
 
-        units2 = new Vector<CharSequence>();
+        targetUnits = new Vector<CharSequence>();
         // Create an ArrayAdapter using the string array and a default spinner layout
-        adapter2 = new ArrayAdapter(this, android.R.layout.simple_spinner_item, units2);
+        targetAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, targetUnits);
         // Specify the layout to use when the list of choices appears
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner2.setAdapter(adapter2);
+        targetAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the targetAdapter to the spinner
+        spinnerTarget.setAdapter(targetAdapter);
 
     }
 
     public void sendMessage(View view) {
-        EditText input = (EditText) findViewById(R.id.edit_message);
+        EditText input = (EditText) findViewById(R.id.edit_measurement);
 
         float value = Float.parseFloat(input.getText().toString());
-        Spinner spinner = (Spinner) findViewById(R.id.source_unit);
-        Spinner spinner2 = (Spinner) findViewById(R.id.destination_unit);
+        Spinner spinnerSource = (Spinner) findViewById(R.id.source_unit);
+        Spinner spinnerTarget = (Spinner) findViewById(R.id.destination_unit);
 
-        String unit1 = (String) spinner.getItemAtPosition(spinner.getSelectedItemPosition());
-        String unit2 = (String) spinner.getItemAtPosition(spinner2.getSelectedItemPosition());
+        String unitSource = (String) spinnerSource.getItemAtPosition(spinnerSource.getSelectedItemPosition());
+        String unitTarget = (String) spinnerTarget.getItemAtPosition(spinnerTarget.getSelectedItemPosition());
 
-        //float value2 = convert(unit1, unit2, )
+        value = convert(value, unitSource, unitTarget);
 
-        String message = input.getText().toString();
+        String message = String.valueOf(value );
         Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
         toast.show();
-        
     }
 
-    static String[] distances = {"Meters", "Miles", "Feets"};
-    static String[] weights = {"Kilograms", "Pounds", "Ounces"};
+
+    private float getStdRatio(String unitSource) {
+        return conversions.get(unitSource);
+    }
+
+    private float convert(float value, String unitSource, String unitTarget) {
+        float sourceRatio = 1/getStdRatio(unitSource);
+        float targetRatio = getStdRatio(unitTarget);
+        return value * sourceRatio * targetRatio;
+    }
+
+
     List<String> getCompliantMeasures(String unit) {
         List<String> dst = Arrays.asList(distances);
         List<String> wgt = Arrays.asList(weights);
+        List<String> vlm = Arrays.asList(weights);
+
         List<String> res = new Vector<String>();
-        if (dst.contains(unit)) {
+        if (dst.contains(unit))
             res.addAll(dst);
-        }
-        else if (wgt.contains(unit)) {
+        else if (wgt.contains(unit))
             res.addAll(wgt);
-        }
+        else if (vlm.contains(unit))
+            res.addAll(wgt);
+
         res.remove(unit);
         return res;
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String message = (String) parent.getItemAtPosition(position);
-        Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
-        toast.show();
-
-        List<String> newList = getCompliantMeasures(message);
-        units2.clear();
-        units2.addAll(newList);
-        adapter2.notifyDataSetChanged();
+        String selectedUnit = (String) parent.getItemAtPosition(position);
+        List<String> newList = getCompliantMeasures(selectedUnit);
+        targetUnits.clear();
+        targetUnits.addAll(newList);
+        targetAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        String message = "Nothing selected";
-        Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
-        toast.show();
     }
 }
