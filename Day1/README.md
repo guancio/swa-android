@@ -1,5 +1,8 @@
 # Day 1 / Disclaimer
-Lot of information have been copied from https://developer.android.com/training/index.html and http://www.vogella.com/tutorials/Android/article.html
+Lot of information have been copied from
+* https://developer.android.com/training/index.html
+* http://www.vogella.com/tutorials/Android/article.html
+* https://developer.android.com/reference/packages.html
 
 # Android
 Android is an operating system based on the Linux kernel.
@@ -10,6 +13,8 @@ This Android operating system can be divided into the four areas:
  * Libraries and runtime - The libraries for many common framework functions, like, graphic rendering, data storage, web browsing. It also contains the Android Runtime, as well as the core Java libraries for
    running Android applications.
  * Linux kernel - Communication layer for the underlying hardware.
+
+![stack](images/stack.png)
 
 An Android application developer typically works with the first two areas to create new Android applications.
 
@@ -42,7 +47,7 @@ To install Android Studio follow the guide at https://developer.android.com/stud
 # Creating an Android Project
 refer to https://developer.android.com/training/basics/firstapp/creating-project.html
 
-This lesson shows you how to create a new Android project with Android Studio and describes some of the files in the project.
+To create a new Android project with Android Studio
 
 1. In Android Studio, create a new project:
  * If you don't have a project opened, in the Welcome to Android Studio window, click Start a new Android Studio project.
@@ -75,13 +80,14 @@ a tree structure, for example
   <author>Roberto Guanciale</author>	
   <title>First Android Lecture</title>	
  </book>
- <book pages"2026" year="2026">
+ <book pages"1016" year="2026">
   <author>Galileo Galilei</author>	
   <title>The Scientific Method</title>	
  </book>
  <book year="">
   <author>Newton</author>	
-  <title>The Scientific Method</title>	
+  <title>The Scientific Method</title>
+  <publisher name="Springer" country="Germany"/>
  </book>
 </catalog>
 ```
@@ -94,8 +100,7 @@ be extensible.
 A tag is a construct that begins with `<` and ends with `>`. Tags come in three flavors:
 * start-tag, such as `<catalog>`, `<book>`
 * end-tag, such as `</catalog>`, `</book>`
-
-* empty-element tag, such as <line-break />. TODO
+* empty-element tag, such as `<publisher />`
 
 ## Elements
 An element is a logical document component that either begins with a start-tag and ends with a matching end-tag (or consists only of an empty-element tag).
@@ -107,12 +112,12 @@ Some examples:
   <author>Roberto Guanciale</author>	
   <title>First Android Lecture</title>	
  </book>` is an element. it has two children: `<author>Roberto Guanciale</author>` and `<title>First Android Lecture</title>`.
-* the while XML document is an element, usually called root. It contains three children.
+* the whole XML document is an element, usually called root. It contains three children.
 
 
 ## Attributes
 An attribute is a construct consisting of a name–value pair that exists within a start-tag (or empty-element tag).
-An example is `<book pages"2026" year="2026">`, where the name of the attributes are "pages" and "year" and their values are "2026" and "2026" respectively.
+An example is `<book pages"1016" year="2026">`, where the name of the attributes are "pages" and "year" and their values are "1016" and "2026" respectively.
 An XML attribute can only have a single value and each attribute can appear at most once on each element. In the common situation where a list of multiple values is desired, this must be done by encoding the list into a well-formed XML attribute with some format beyond what XML defines itself. Usually this is either a comma or semi-colon delimited list or, if the individual values are known not to contain spaces,a space-delimited list can be used. 
 
 ## Resources
@@ -149,7 +154,6 @@ To run the app, continue to the next lesson.
 ## Running Your App
 https://developer.android.com/training/basics/firstapp/running-app.html
 
-In the previous lesson, you created an Android project that displays "Hello World."
 You can now run the app on an emulator. 
 Before you run your app on an emulator, you need to create an Android Virtual Device (AVD) definition.
 An AVD definition defines the characteristics of an Android phone, tablet that you want to simulate in the Android Emulator.
@@ -195,8 +199,8 @@ setContentView(R.layout.activity_main);
 This method, inform the Android runtime to draw the graphical interface `R.layout.activity_main`.
 Where `R.layout.activity_main` is defined? 
 It is not directly defined in Java. Like several components in an Android application, `R.layout.activity_main`
-is defined via an XML file `res/layout/activity_main.xml`. These resources are transformed *atumatically* by
-the Android development environment to Java file, that you never manipulate manually.
+is defined via an XML file: `res/layout/activity_main.xml`. These resources are transformed *atumatically* by
+the Android development environment to Java files, that you never manipulate manually.
 The reason behind this design choice is that it is easier to build tools that manipulate XML files that Java code.
 Also, since XML is extensible, the same format can be used to speficy different traits of you application 
 
@@ -253,7 +257,7 @@ We can change other properties of the `TextView`
  3. switching to the text view of the editor we can notice that a new attribute as been added to the `TextView` element: `android:textSize="25sp"`
 
 # Using resources
-Writing constants (especially strings) in the layout XML file or in a Java source file is discouraged for several reason:
+Writing constants (especially strings) in the layout XML file or in a Java source file is discouraged for several reasons:
 
 * We would like to change the welcome message independently from the behavior of the app (which is defined in Java) and
   the graphical layout of the activity
@@ -292,7 +296,7 @@ To add a new resource, containing the hello message change `res/values/strings.x
 ```
 Notice that some spacial characters (e.g. `'`) must be quoted by `\`.
 
-To let the `TextView` to print the message stored in the resource, open `main_activity.xml` and change the `android:text` attribute
+To let the `TextView` print the message stored in the resource, open `main_activity.xml` and change the `android:text` attribute
 of the element as `android:text="@string/hello_msg"`. The `@` symbol informs the tool that the content of the attribute must be takes from
 a resource, the `string` part informs the tool that the resource is a string (needed to locate the correct resource if there are multiple resources
 of different type having the same name), and the `hello_msg` part informs the tool about the name of the resource.
@@ -329,7 +333,7 @@ The effect of these elements is demonstrated in the following graphics.
 
 
 ## Frame layout
-`FrameLayout` is a layout manager which draws all child elements on top of each other. This allows to create nice visual effects.
+`FrameLayout` is a layout manager which draws all child elements on top of each other.
 
 ## LinearLayout
 `LinearLayout` puts all its child elements into a single column or row depending on the `android:orientation` attribute. Possible values for this attribute are `horizontal` and vertical. `horizontal` is the default value.
@@ -344,16 +348,13 @@ If `horizontal` is used, the child elements are layouted as indicated by the fol
 
 `LinearLayout` can be nested to achieve more complex layouts.
 
-`LinearLayout` supports assigning a weight to individual children via the `android:layout_weight` layout parameter. This value specifies how much of the extra space in the layout is allocated to the corresponding view. If, for example, you have two widgets and the first one defines a `layout_weight` of 1 and the second of 2, the first will get 1/3 of the available space and the other one 2/3. You can also set the `layout_width` to zero to always have a certain ratio.
+`LinearLayout` supports assigning a weight to individual children via the `android:layout_weight` layout parameter. This value specifies how much of the extra space in the layout is allocated to the corresponding view. If, for example, you have two widgets and the first one defines a `layout_weight` of 1 and the second of 2, the first will get 1/3 of the available space and the other one 2/3. You can also set the `layout_weight` to zero to always have a certain ratio.
 
 ## RelativeLayout
 
 `RelativeLayout` allows positioning the widget relative to each other. This can be used for complex layouts. `RelativeLayout` is a complex layout manager and should only be used if such a complex layout is required, as it performs a resource intensive calculation to layout its children.
 
 A simple usage for RelativeLayout is if you want to center a single component. Just add one component to the RelativeLayout and set the `android:layout_centerInParent` attribute to `true`.
-
-## GridLayout
-We will see it later
 
 ## Excercise: display a text entry and a button
 Our goal is to show a text field and a button in a single row.
@@ -654,7 +655,7 @@ adapter.notifyDataSetChanged();
 So, first the list contating the choices must be updated (e.g. by clearing it, adding elements, removing elements etc) then the adapter must be informed about the changes in the data backend using `notifyDataSetChanged`.
 
 
-## Responding to User Selections
+## Handling User Selections
 
 When the user selects an item from the drop-down, the Spinner object receives an on-item-selected event.
 
@@ -687,7 +688,6 @@ spinner.setOnItemSelectedListener(this);
 If you implement the `AdapterView.OnItemSelectedListener` interface with your Activity (such as in the example above), you can pass `this` as the interface instance.
 
 
+# Accessing the spinner value
 
-# Garbage
-
-For example, to access a String with the `R.string.yourString` ID in your source code, you would use the getString(R.string.yourString) method defined on the Context class.
+# Updating the content of the spinner
