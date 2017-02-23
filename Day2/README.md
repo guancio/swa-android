@@ -262,3 +262,45 @@ Spinner spinner = (Spinner) findViewById(R.id.my_spinner);
 String value = (String) spinner.getItemAtPosition(spinner.getSelectedItemPosition());
 
 ```
+
+# Other components
+
+https://developer.android.com/guide/topics/ui/controls.html
+
+## Checkboxes
+Checkboxes allow the user to select one or more options from a set. Typically, you should present each checkbox option in a vertical list.
+
+![checkboxes](images/checkboxes.png)
+
+```XML
+    <CheckBox android:id="@+id/checkbox_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_to_display"
+        android:onClick="onCheckboxClicked"/>
+    <CheckBox android:id="@+id/checkbox_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_to_display"
+        android:onClick="onCheckboxClicked"/>
+```
+
+```Java
+public void onCheckboxClicked(View view) {
+    // Is the view now checked?
+    boolean checked = ((CheckBox) view).isChecked();
+
+    // Check which checkbox was clicked
+    switch(view.getId()) {
+        case R.id.checkbox_one:
+            break;
+        case R.id.checkbox_two:
+            break;
+    }
+}
+```
+
+```Java
+CheckBox box = (CheckBox) findViewById(R.id.checkbox_one);
+box.isChecked();
+```
