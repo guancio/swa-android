@@ -25,12 +25,14 @@
 
 - "Help" -> "Edit Custom Properties..." then edit the config file by
   adding:
+```
 #---------------------------------------------------------------------
 # IDEA can copy library .jar files to prevent their locking.
 # By default this behavior is enabled on Windows and disabled on other platforms.
 # Uncomment this property to override.
 #---------------------------------------------------------------------
 idea.jars.nocopy=false
+```
 
 - Build -> Clean Project
 - Run
